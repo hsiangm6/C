@@ -37,5 +37,6 @@ int main(void){
     printf("Product is %d\n",product);
     printf("Smallest is %d\n",smallest);
     printf("Largest is %d\n",largest);
+    printf("Hello World\n");
     return 0;
 }
