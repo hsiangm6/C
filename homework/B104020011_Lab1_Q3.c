@@ -1,6 +1,5 @@
 #include <stdio.h>
 int main(void){
-
     //宣告變數
     int height,minStar; //height=金字塔的高度, minStar=最小星星數
     printf("Please input the height of pyramid:"); //輸入金字塔的高度
