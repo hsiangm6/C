@@ -1,10 +1,10 @@
 /*發票兌獎
 頭獎 20萬 8位數字相同
-二獎 4萬 7位數字相同
-三獎 1萬 6位數字相同
-四獎 4千 5位數字相同
-五獎 1千 4位數字相同
-六獎 2百 3位數字相同
+二獎 4萬 末7位數字相同
+三獎 1萬 末6位數字相同
+四獎 4千 末5位數字相同
+五獎 1千 末4位數字相同
+六獎 2百 末3位數字相同
 
 一張發票若同時符合2個獎項，則獎金以最高獎金為主，例如發票號碼同時符合五獎及六獎，則以五獎判定。
 對獎主程式將呼叫WinPrize()函式以計算並回傳一張發票的中獎金額，據以統計全部發票的中獎總金額。
@@ -89,3 +89,41 @@ int WinPrize (char W[], char P[]) {
 23　	    return 0;
 24　	}
 25　	*/
+
+#include<stdio.h>
+int WinPrize(char W[], char P[]){ //檢測一張發票的中獎金額
+    int count=0, i=7;
+    while(P[i]==W[i]){
+        count++;
+        i--;
+    }
+    switch(count){
+        case 8:
+            return 200000;
+        case 7:
+            return 40000;
+        case 6:
+            return 10000;
+        case 5:
+            return 4000;
+        case 4:
+            return 1000;
+        case 3:
+            return 200;
+        default:
+            return 0;
+    }
+}
+void main(void){
+    char W[9]; //頭獎號碼
+    char P[9]; //發票號碼
+    int N=0; //發票總數
+    int M=0; //發票總金額
+    scanf("%s",&W);
+    scanf("%d",&N);
+    for(int i=0;i<N;i++){ //每張發票中獎金額加總
+        scanf("%s",&P);
+        M+=WinPrize(W, P);
+    }
+    printf("%d", M);
+}

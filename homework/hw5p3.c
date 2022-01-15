@@ -3,7 +3,8 @@
 
 第一位同學抽一張撲克牌，依據撲克牌上的顏色與點數，決定數人數的方向(黑色代表逆時針而紅色代表順時針方向)與數量。
 
-下圖為N =10位同學抽M=3張撲克牌的例子，第一位同學抽中紅心K (A=1、J=11、Q=12、K =13)，代表從第一個同學順時針方向數起，第13個人會被淘汰；接著，第一個淘汰者往順時針方向的下一位同學再抽牌，第二張抽中梅花A，代表從這位同學開始逆時針方向數起，也就是自己會是被淘汰者；接著往逆時針方向的下一位同學再抽第三張牌(即最後一輪)，最後一張牌抽中黑桃6，代表從這位同學開始逆時針方向數起第6人(即7號同學)是勝利者。
+下圖為N =10位同學抽M=3張撲克牌的例子，第一位同學抽中紅心K (A=1、J=11、Q=12、K =13)，代表從第一個同學順時針方向數起，第13個人會被淘汰；接著，第一個淘汰者往順時針方向的下一位同學再抽牌，第二張抽中梅花A
+，代表從這位同學開始逆時針方向數起，也就是自己會是被淘汰者；接著往逆時針方向的下一位同學再抽第三張牌(即最後一輪)，最後一張牌抽中黑桃6，代表從這位同學開始逆時針方向數起第6人(即7號同學)是勝利者。
 
 依此類推，如此反覆抽牌決定每次數人數的方向與數量，到第M 張也就是最後一張牌抽出後，被數到的人就是此次遊戲的勝利者。
 主程式將持續呼叫WhoOut()函式，以淘汰學生直至最後一輪找到獲勝學生為止。
@@ -110,3 +111,116 @@ B2
 33　	    return 0;
 34　	}
 35　	*/
+#include <stdio.h>
+
+int start_id = 0; // 紀錄每一回合從哪個學生開始
+
+int WhoOut(int students[], int N, char color, int point) {
+    int count=0;
+    int last_id=0;//這一輪的淘汰者或勝利者
+    last_id=start_id;
+    if(color=='R'){
+        last_id+=point;
+        if(last_id<N){
+            for(int i=start_id; i<=last_id;i++){
+                if(students[i]==1){
+                    count++;
+                }
+            }
+            last_id+=count;
+            count=0;
+        }
+        while(last_id>N){
+            last_id-=N;
+            for(int i=start_id; i<=N;i++){
+                if(students[i]==1){
+                count++;
+                }
+            }
+            if(last_id>N){
+                for(int i=0; i<=start_id;i++){
+                    if(students[i]==1){
+                        count++;
+                    }
+                }
+            }
+            else{
+                for(int i=0; i<=last_id;i++){
+                    if(students[i]==1){
+                        count++;
+                    }
+                }
+            }
+            last_id+=count;
+            count=0;
+            printf("last idA:%d\n",last_id);
+        }
+        start_id=last_id+1;
+        return last_id;
+    }
+    else if(color=='B'){
+        last_id-=point;
+        if(last_id>0){
+            for(int i=start_id; i>=last_id;i--){
+                if(students[i]==1){
+                    count++;
+                }
+            }
+            last_id-=count;
+            count=0;
+        }
+        while(last_id<0){
+            last_id+=N;
+            for(int i=start_id; i>0; i--){
+                if(students[i]==1){
+                count++;
+                }
+            }
+            if(last_id<0){
+                for(int i=start_id; i<=N;i++){
+                    if(students[i]==1){
+                        count++;
+                    }
+                }
+            }
+            else{
+                for(int i=last_id; i<=N;i++){
+                    if(students[i]==1){
+                        count++;
+                    }
+                }
+            }
+            last_id-=count;
+            count=0;
+            printf("last idB:%d\n",last_id);
+        }
+        
+        start_id=last_id-1;
+        return last_id;
+    }
+}
+
+int main() {
+    int N = 0; // 學生人數
+    int M = 0; // 抽撲克牌次數
+    int students[100] = {0}; // 紀錄學生狀態
+    int outList[100] = {0}; // 紀錄每次淘汰的學生
+    
+    scanf("%d %d",&N,&M);
+    if (M > N) {
+        printf("error occur");
+    }
+    else {
+        char color; // 顏色
+        int point = 0; // 點數
+        for (int i=0; i<M; i++) {
+            scanf(" %c%d",&color, &point);
+            outList[i] = WhoOut(students, N, color, point);
+            students[outList[i]-1] = 1; // 紀錄此學生已被淘汰/獲勝
+        }
+        for (int i=0; i<M; i++) {
+	        printf("%d\n", outList[i]);
+	    }
+    }
+    return 0;
+}

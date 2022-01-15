@@ -126,17 +126,18 @@ Fail
 //bool型別，則需要 #include <stdbool.h>   https://codertw.com/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/90337/
 bool CheckPwdPattern(char password[]) { // r4：密碼正寫與反寫不可以相同(大小寫視為不同)
     int len = strlen(password);
-    printf("%s, %s",password[0],password[len-1]);
-    if(password[0] = password[len-1]) {
-        return true;
+    for(int i=0;i<len/2;i++){
+        printf("%d %d\n",password[i],password[len-i-1]);
+        if(password[i] == password[len-1-i]);
+        else{ 
+            return true;
+        }
     }
-    else{ 
-        return false;
-    }
+    return false;
 }
 int main() {
     char pwdStr[105];
 	int score = 0;
     scanf("%s",&pwdStr);
-    printf("%zu",CheckPwdPattern(pwdStr));
+    printf("%d",CheckPwdPattern(pwdStr));
 }
