@@ -1,7 +1,10 @@
 #include <stdio.h>
 void compare(char string1[], char string2[]){ //傳入第一和第二串字串
-    
-    for(int i=0;string1[i]!='\0' && string2[i]!='\0';i++){ //迴圈持續到其中一字串結束
+    int count=0;
+    for(int i=0;count<2;i++){ //迴圈持續到其中一字串結束
+        if(string1[i]=='\0' || string2[i]=='\0'){
+            count++;
+        }
         if(string1[i] != string2[i]){ //如果有兩字串有一字元不同，判定為不同的兩字串
             printf("they are different string.\n");
             return;

@@ -116,87 +116,104 @@ B2
 int start_id = 0; // 紀錄每一回合從哪個學生開始
 
 int WhoOut(int students[], int N, char color, int point) {
+
     int count=0;
-    int last_id=0;//這一輪的淘汰者或勝利者
-    last_id=start_id;
-    if(color=='R'){
-        last_id+=point;
-        if(last_id<N){
+    int last_id=start_id;//last_id:這一輪的淘汰者或勝利者
+
+    if(color=='R'||color=='r'){ //R是順時針
+        last_id+=(point-1); //+間隔數而不是+抽到的數值，因為start_id是計算順位的第一位
+        if(last_id<(N-1)){ //計算後的位置在總人數內，計算這一段經過多少應被跳過的順位，並且不用轉換超出總人數的順位。N要注意以陣列的位置符去思考
             for(int i=start_id; i<=last_id;i++){
                 if(students[i]==1){
                     count++;
                 }
             }
-            last_id+=count;
-            count=0;
         }
-        while(last_id>N){
+        while(last_id>(N-1)){//計算後的位置在總人數外，計算這一段經過多少應被跳過的順位，並且要轉換超出總人數的順位。N要注意以陣列的位置符去思考
             last_id-=N;
-            for(int i=start_id; i<=N;i++){
+            for(int i=start_id; i<N;i++) {//計算從這一輪的開始順位到最大順位，經過多少應被跳過的順位
                 if(students[i]==1){
                 count++;
                 }
             }
-            if(last_id>N){
+            if(last_id>(N-1)){ //如果轉換後還是超出順位，就必須再轉換一次超出總人數的順位，並且計算從0順位到這一輪開始的順位，經過多少應被跳過的順位
                 for(int i=0; i<=start_id;i++){
                     if(students[i]==1){
                         count++;
                     }
                 }
             }
-            else{
+            else{ //如果轉換後沒有超出順位，計算從0順位到這一輪結束的順位，經過多少應被跳過的順位
                 for(int i=0; i<=last_id;i++){
                     if(students[i]==1){
                         count++;
                     }
                 }
             }
-            last_id+=count;
-            count=0;
-            printf("last idA:%d\n",last_id);
+            
         }
-        start_id=last_id+1;
-        return last_id;
+        if(count!=0){ //如果count不=0，讓count成為recursive的point，重新交給WhoOut加總及判斷，直到count=0。如果不用recursive，而是直接last_id+count，可能在這過程中又遇到需跳過的順位卻並沒有再加上去
+            start_id=last_id+1;
+            while(students[start_id]==1){ //為了防止下一輪的開始順位其實是前幾輪已經被淘汰的順位
+                start_id++;
+            }
+            return WhoOut(students, N, color, count);
+        }
+        else{//如果沒有了應該跳過的順位，輸出現在的last_id
+            start_id=last_id+1;
+            while(students[start_id]==1){ //為了防止下一輪的開始順位其實是前幾輪已經被淘汰的順位
+                start_id++;
+            }
+            return last_id+1; //last_id是依照陣列的順位，所以輸出時必須加1，變成從1開始的一般順位
+        }
     }
-    else if(color=='B'){
-        last_id-=point;
-        if(last_id>0){
-            for(int i=start_id; i>=last_id;i--){
+
+    else if(color=='B'||color=='b'){
+        last_id=last_id-point+1;
+        if(last_id>=0){
+            for(int i=start_id; i>=last_id;i--){ //計算從這一輪的開始順位到最小順位，經過多少應被跳過的順位
                 if(students[i]==1){
                     count++;
                 }
             }
-            last_id-=count;
-            count=0;
         }
         while(last_id<0){
-            last_id+=N;
-            for(int i=start_id; i>0; i--){
+            last_id+=N; //低於0的順位轉換為陣列的順位
+            for(int i=start_id; i>=0; i--){ //計算從這一輪的開始順位到最小順位，經過多少應被跳過的順位
                 if(students[i]==1){
-                count++;
+                    count++;
                 }
             }
-            if(last_id<0){
-                for(int i=start_id; i<=N;i++){
+            if(last_id<0){ //如果轉換後順位還是小於0，就必須再轉換一次小於0的順位，並且計算從這一輪開始的順位到0順位，經過多少應被跳過的順位
+                for(int i=start_id; i<N;i++){
                     if(students[i]==1){
                         count++;
                     }
                 }
             }
-            else{
-                for(int i=last_id; i<=N;i++){
+            else{ //如果轉換後沒有小於0順位，計算從0順位到這一輪結束的順位，經過多少應被跳過的順位
+                for(int i=last_id; i<N;i++){
                     if(students[i]==1){
                         count++;
                     }
                 }
             }
-            last_id-=count;
-            count=0;
-            printf("last idB:%d\n",last_id);
+
         }
-        
-        start_id=last_id-1;
-        return last_id;
+        if(count!=0){
+            start_id=last_id-1;
+            while(students[start_id]==1){
+                start_id--;
+            }
+            return WhoOut(students, N, color, count);
+        }
+        else{
+            start_id=last_id-1;
+            while(students[start_id]==1){
+                start_id--;
+            }
+            return last_id+1; //last_id是依照陣列的順位，所以輸出時必須加1，變成從1開始的一般順位
+        }
     }
 }
 
@@ -206,7 +223,7 @@ int main() {
     int students[100] = {0}; // 紀錄學生狀態
     int outList[100] = {0}; // 紀錄每次淘汰的學生
     
-    scanf("%d %d",&N,&M);
+    scanf("%d\n %d",&N,&M);
     if (M > N) {
         printf("error occur");
     }

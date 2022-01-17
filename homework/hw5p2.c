@@ -93,7 +93,7 @@ int WinPrize (char W[], char P[]) {
 #include<stdio.h>
 int WinPrize(char W[], char P[]){ //檢測一張發票的中獎金額
     int count=0, i=7;
-    while(P[i]==W[i]){
+    while(P[i]==W[i]){ //從末位開始往前計算有多少相同的發票號碼，遇到不相同的號碼，迴圈就直接停止
         count++;
         i--;
     }

@@ -125,11 +125,9 @@ Fail
 #include <string.h>
 //bool型別，則需要 #include <stdbool.h>   https://codertw.com/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/90337/
 bool CheckPwdPattern(char password[]) { // r4：密碼正寫與反寫不可以相同(大小寫視為不同)
-    int len = strlen(password);
+    int len = strlen(password); //計算字串長度
     for(int i=0;i<len/2;i++){
-        printf("%d %d\n",password[i],password[len-i-1]);
-        if(password[i] == password[len-1-i]);
-        else{ 
+        if(password[i] != password[len-1-i]){ //len-1是把長度轉換為陣列的位置符
             return true;
         }
     }
