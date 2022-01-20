@@ -1,10 +1,13 @@
-#include<stdio.h>
-int main(void){
-    int s[10];
-    for(int i=1;i<7;i++){
-        s[i]=i;
-    }
-    printf("%d",s);
+#include <stdio.h> 
+int main() 
+{ 
+char input[10]; 
+int num; 
 
-    return 0;	
+printf("Enter a number: "); 
+gets(input); 
+num = atoi(input); 
+printf("You entered %d", num);
+
+return 0; 
 }
