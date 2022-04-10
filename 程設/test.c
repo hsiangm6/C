@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 int indexOf(char string[], char substr[]){
-    //printf("%s\n",string);
-    //printf("%s\n",substr);
     char *p1, *p2, *p3;
     int i=0,j=0,flag=0;
     p1 = string;
