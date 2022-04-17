@@ -1,12 +1,12 @@
-//B104020011-危湘妤
+//B104020011-危湘妤-comparing prefix sum and suffix sum
 #include <stdio.h>
 int countPairs(int a[], int length){
     int prefix[10]={0};
     int suffix[10]={0};
-    int count=0;
+    int count=0; //count= the number of pairs
     int i=0, j=0;
     for(i=0; i<length; i++){ //i=the place of prefix/suffix array
-        for(j=0; j<=i; j++){ //j=the place of a array
+        for(j=0; j<=i; j++){ //j=the place of 'a' array
             prefix[i]+=a[j];
             suffix[i]+=a[length-1-j];
         }
