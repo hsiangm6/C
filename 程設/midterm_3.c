@@ -1,4 +1,4 @@
-//B104020011-危湘妤 指定總和的(連續數字加總)集合
+//B104020011-危湘妤 A collection of (sum of consecutive numbers) specifying the sum
 #include <stdio.h>
 int main(){
     int etr=0; //etr=the number you input

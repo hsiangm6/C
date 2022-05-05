@@ -1,4 +1,6 @@
 //B104020011-危湘妤
+/* Please write a C function concat(str1, str2, out) that concatenates two given strings, str1 
+and str2, and then stores the result into the new variable out. */
 #include <stdio.h>
 void concat(char str1[], char str2[], char out[]){
     int i=0,j=0; //i=index of out, j=index of str1/str2

@@ -1,4 +1,5 @@
 //B104020011 危湘妤
+//Please write an C program that shows prime factor decomposition. 
 #include <stdio.h>
 void main(void){
     int a=0, exp=0; //a=輸入的整數，exp=質因數的指數
@@ -12,7 +13,7 @@ void main(void){
                 exp++;
                 a/=i;
             }
-            if(a==1){ //如果a已經是1，則字串後不用再加"*"C:\Users\hsian\Documents\GitHub\C\程設\B104020011.c
+            if(a==1){ //如果a已經是1，則字串後不用再加"*"
             printf("%d^%d\n",i,exp);
             }
             else if(exp>0){

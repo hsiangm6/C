@@ -1,4 +1,5 @@
 //B104020011-危湘妤
+//count the number of the word
 #include <stdio.h>
 int wordCount(char *string){
     int i=0;

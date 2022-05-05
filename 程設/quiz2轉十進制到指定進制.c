@@ -1,4 +1,5 @@
 //B104020011_危湘妤
+//Please write an C program that converts a decimal number into base ( 2 to 8 )
 #include <stdio.h>
 void main(void){
     int base=0,enter=0, output=0, counter=1;

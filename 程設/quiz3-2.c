@@ -1,4 +1,6 @@
 //B104020011 危湘妤
+/* Please write a C function dbinom() that implements binomial probability mass function to compute the probability of getting exactly k successes in n (success/failure) 
+trials with the probability of success p  */
 #include <stdio.h>
 void combn(int n, int k){
     long long int sum=1;
